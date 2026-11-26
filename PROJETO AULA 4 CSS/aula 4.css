@@ -1,0 +1,165 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Oswald", sans-serif;
+    color: #5D5D7D; /* CORRIGIDO: de COLOR para color (CSS é case-sensitive para propriedades) */
+}
+
+/* 2. Layout Principal com Flexbox */
+.wrapper{
+    width: 100%;
+    min-height: 100vh; /* CORRIGIDO: de 100vw para 100vh (100% da altura da viewport) */
+    display: flex; /* NOVO: Transforma o wrapper em um container flex para o layout de colunas */
+    /* justify-content: center; */ /* Opcional: Centraliza o conteúdo horizontalmente se houver espaço extra */
+    /* align-items: center; */ /* Opcional: Centraliza o conteúdo verticalmente */
+}
+
+.container-left{
+    width: 60%; /* Mantido. Flexbox respeita a largura */
+    padding-left: 136px;
+    margin-top: 20%; /* Pode precisar de ajuste fino. Com Flexbox, podemos usar align-items para controle vertical */
+    display: flex; /* NOVO: Para alinhar o conteúdo interno (h1, p, button) */
+    flex-direction: column; /* NOVO: Coloca o conteúdo em coluna */
+    justify-content: center; /* NOVO: Centraliza verticalmente o conteúdo dentro do container-left */
+    align-items: flex-start; /* NOVO: Alinha o conteúdo à esquerda dentro do container-left */
+}
+
+.container-right{
+    width: 40%; /* Mantido. Flexbox respeita a largura */
+    background-color: rgba(93, 93, 125, 0.16);
+    min-height: 100vh; /* Mantido. min-height é mais seguro para flex-items */
+    display: flex; /* NOVO: Para alinhar o conteúdo interno (header, img) */
+    flex-direction: column; /* NOVO: Coloca o conteúdo em coluna */
+    justify-content: space-between; /* SOLUÇÃO DESAFIO 1: Espaça o header e a imagem, empurrando-os para as extremidades */
+    align-items: center; /* SOLUÇÃO DESAFIO 1: Centraliza a imagem horizontalmente */
+    /* position: relative; */ /* REMOVIDO: Não é mais necessário com Flexbox para este layout */
+    /* REMOVIDO: display: inline-block; já que estamos usando Flexbox no pai */
+}
+
+/* Posicionamento da Imagem (Desafio 1 - Centralização) */
+img{
+    /* REMOVIDO: position: relative, top e right. Com Flexbox no pai, a imagem é centralizada de forma mais robusta. */
+    max-width: 100%; /* Garante que a imagem não ultrapasse a largura do contêiner */
+    height: auto; /* Mantém a proporção da imagem */
+    /* Se precisar de um ajuste vertical específico, pode adicionar margin-top/bottom */
+}
+
+h1{
+    font-size: 70px;
+    line-height: 80px;
+    width: 368px; /* Considere usar max-width: 368px; para melhor responsividade */
+    /* text-align: center; */ /* Exemplo de ajuste */
+}
+
+p{
+    font-size: 28px;
+    line-height: 48px;
+    opacity: 0.6;
+    margin: 15px 0;
+    width: 540px; /* Considere usar max-width: 540px; para melhor responsividade */
+    /* text-align: center; */ /* Exemplo de ajuste */
+}
+
+button{
+    width: 269px;
+    height: 62px;
+    background: #9499ea;
+    /* CORRIGIDO: Sintaxe do box-shadow. Ajuste os valores conforme sua intenção */
+    box-shadow: 0px 10px 24px 14px rgba(148, 153, 234, 0.0979959);
+    border: none;
+    border-radius: 30px;
+    font-size: 24px;
+    line-height: 36px;
+    text-align: center;
+    color: #ffffff;
+    cursor: pointer;
+    margin-top: 20px; /* Exemplo de espaçamento */
+}
+button:hover{
+   opacity: 0.8;
+  background: blue;
+}
+button:active{
+    opacity: 0.5;
+    background-color: green;
+}
+a {
+    font-size: 28px;
+    line-height: 41px;
+    color:#5D5D7D;
+    /* REMOVIDO: margin-right: 41px; - Usaremos 'gap' no header para espaçamento entre links */
+    cursor: pointer;
+    text-decoration: none; /* Sugestão: remover sublinhado padrão de links */
+}
+a:nth-child(2) {
+    opacity:0.4;
+}
+a:hover {
+    opacity: 0.4;
+}
+a:active {
+    opacity: 0.8;
+}
+header {
+    margin: 24px 0 0 57px; /* Mantido, mas pode ser ajustado com Flexbox */
+    display: flex; /* NOVO: Para alinhar os links internamente */
+    justify-content: flex-end; /* SOLUÇÃO DESAFIO 2: Alinha os links à direita do header */
+    gap: 41px; /* SOLUÇÃO DESAFIO 2: Adiciona espaçamento entre os links (substitui margin-right nos <a>) */
+    width: 100%; /* Garante que o header ocupe toda a largura do pai flex */
+    padding-right: 57px; /* NOVO: Ajusta o espaçamento dos links para a direita da tela */
+    box-sizing: border-box; /* NOVO: Inclui padding na largura para evitar overflow */
+}
+
+/* 7. Responsividade com Media Query */
+@media screen and (max-width: 900px){ /* CORRIGIDO: de @medea para @media */
+    .wrapper {
+        flex-direction: column; /* NOVO: Coloca os itens (container-left e container-right) em coluna em telas pequenas */
+        padding: 0; /* NOVO: Remove padding geral */
+    }
+
+    .container-left{
+        width: 100%;
+        height: auto; /* NOVO: Altura automática para se ajustar ao conteúdo */
+        padding: 50px 20px; /* NOVO: Padding responsivo */
+        margin:0;
+        align-items: center; /* NOVO: Centraliza o conteúdo textual */
+        text-align: center; /* NOVO: Centraliza o texto */
+    }
+    .container-right{
+        display: flex; /* Mantido Flexbox */
+        height: auto;
+        width: 100%;
+        position: static; /* CORRIGIDO: de position: absolute para static, retorna ao fluxo normal */
+        justify-content: center; /* NOVO: Centraliza o conteúdo horizontalmente */
+        align-items: center; /* NOVO: Centraliza o conteúdo verticalmente */
+        padding: 20px 0; /* NOVO: Padding para o container-right */
+    }
+    img{
+        position: static; /* CORRIGIDO: de position: relative para static, retorna ao fluxo normal */
+        top: auto; /* Reset */
+        right: auto; /* Reset */
+        max-width: 80%; /* NOVO: Imagem menor em telas pequenas */
+    }
+    header{
+        display: none; /* Mantido: Oculta o cabeçalho em telas pequenas */
+    }
+    h1{ /* CORRIGIDO: de hi para h1 */
+        font-size: 36px;
+        line-height: 52px;
+        width: auto; /* NOVO: Largura automática para se ajustar */
+        margin: 58px 20px 0 20px; /* NOVO: Margens responsivas */
+        text-align: center; /* CORRIGIDO: Exemplo de text-align (completando a propriedade) */
+    }
+    p {
+        font-size: 18px; /* NOVO: Tamanho de fonte menor para parágrafo */
+        line-height: 28px;
+        width: auto; /* NOVO: Largura automática */
+        margin: 15px 20px; /* NOVO: Margens responsivas */
+    }
+    button {
+        width: 200px; /* NOVO: Botão menor */
+        height: 50px;
+        font-size: 18px;
+    }
+}
